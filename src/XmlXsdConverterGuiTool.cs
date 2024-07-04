@@ -10,14 +10,14 @@ namespace DevToys.XmlXsd;
 [Name("XmlXsdConverter")]                                                         // A unique, internal name of the tool.
 [ToolDisplayInformation(
     IconFontName = "DevToys-Tools-Icons",                                       // This font is available by default in DevToys
-    IconGlyph = '\u0122',                                                     // An icon that represents a pizza
+    IconGlyph = '\u0122',                                                     // An icon
     GroupName = PredefinedCommonToolGroupNames.Converters,                    // The group in which the tool will appear in the side bar.
     ResourceManagerAssemblyIdentifier = nameof(XmlXsdAssemblyIdentifier), // The Resource Assembly Identifier to use
-    ResourceManagerBaseName = "DevToys.XmlXsd.XsdGenerator",                      // The full name (including namespace) of the resource file containing our localized texts
-    ShortDisplayTitleResourceName = nameof(XsdGenerator.ShortDisplayTitle),    // The name of the resource to use for the short display title
-    LongDisplayTitleResourceName = nameof(XsdGenerator.LongDisplayTitle),
-    DescriptionResourceName = nameof(XsdGenerator.Description),
-    AccessibleNameResourceName = nameof(XsdGenerator.AccessibleName))]
+    ResourceManagerBaseName = "DevToys.XmlXsd.Localization.XsdGenerator",                      // The full name (including namespace) of the resource file containing our localized texts
+    ShortDisplayTitleResourceName = nameof(Localization.XsdGenerator.ShortDisplayTitle),    // The name of the resource to use for the short display title
+    LongDisplayTitleResourceName = nameof(Localization.XsdGenerator.LongDisplayTitle),
+    DescriptionResourceName = nameof(Localization.XsdGenerator.Description),
+    AccessibleNameResourceName = nameof(Localization.XsdGenerator.AccessibleName))]
 internal sealed class XmlXsdConverterGuiTool : IGuiTool
 {
     private enum GridColumn
@@ -101,28 +101,28 @@ internal sealed class XmlXsdConverterGuiTool : IGuiTool
                     GridColumn.Content,
                     Stack().Vertical().WithChildren(
                         Label()
-                        .Text(XsdGenerator.Configuration),
+                        .Text(Localization.XsdGenerator.Configuration),
                         Setting("xml-to-xsd-text-conversion-setting")
                         .Icon("FluentSystemIcons", '\uF18D')
-                        .Title(XsdGenerator.ConversionTitle)
-                        .Description(XsdGenerator.ConversionDescription)
+                        .Title(Localization.XsdGenerator.ConversionTitle)
+                        .Description(Localization.XsdGenerator.ConversionDescription)
                         .Handle(
                             _settingsProvider,
                             _conversionMode,
                             OnConversionModeChanged,
-                            Item(XsdGenerator.XmlToXsd, XmlToXsdConversion.XmlToXsd),
-                            Item(XsdGenerator.XsdToXml, XmlToXsdConversion.XsdToXml)
+                            Item(Localization.XsdGenerator.XmlToXsd, XmlToXsdConversion.XmlToXsd),
+                            Item(Localization.XsdGenerator.XsdToXml, XmlToXsdConversion.XsdToXml)
                         ),
                         Setting("xml-to-xsd-text-indentation-setting")
                         .Icon("FluentSystemIcons", '\uF6F8')
-                        .Title(XsdGenerator.Indentation)
+                        .Title(Localization.XsdGenerator.Indentation)
                         .Handle(
                             _settingsProvider,
                             _indentationMode,
                             OnIndentationModelChanged,
-                            Item(XsdGenerator.TwoSpaces, Indentation.TwoSpaces),
-                            Item(XsdGenerator.FourSpaces, Indentation.FourSpaces),
-                            Item(XsdGenerator.Tab, Indentation.OneTab)
+                            Item(Localization.XsdGenerator.TwoSpaces, Indentation.TwoSpaces),
+                            Item(Localization.XsdGenerator.FourSpaces, Indentation.FourSpaces),
+                            Item(Localization.XsdGenerator.Tab, Indentation.OneTab)
                         )
                     )
                 ),
@@ -133,11 +133,11 @@ internal sealed class XmlXsdConverterGuiTool : IGuiTool
                         .Vertical()
                         .WithLeftPaneChild(
                             _inputTextArea
-                                .Title(XsdGenerator.Input)
+                                .Title(Localization.XsdGenerator.Input)
                                 .OnTextChanged(OnInputTextChanged))
                         .WithRightPaneChild(
                             _outputTextArea
-                                .Title(XsdGenerator.Output)
+                                .Title(Localization.XsdGenerator.Output)
                                 .ReadOnly()
                                 .Extendable())
                 )

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DevToys.XmlXsd {
+namespace DevToys.XmlXsd.Localization {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace DevToys.XmlXsd {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DevToys.XmlXsd.XsdGenerator", typeof(XsdGenerator).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DevToys.XmlXsd.Localization.XsdGenerator", typeof(XsdGenerator).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

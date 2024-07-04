@@ -23,7 +23,7 @@ internal static class Conversion
                 if (!conversionResult.HasSucceeded && string.IsNullOrWhiteSpace(conversionResult.Data))
                 {
                     cancellationToken.ThrowIfCancellationRequested();
-                    return new(XsdGenerator.InvalidXml, false);
+                    return new(Localization.XsdGenerator.InvalidXml, false);
                 }
                 break;
             case XmlToXsdConversion.XsdToXml:
@@ -31,7 +31,7 @@ internal static class Conversion
                 if (!conversionResult.HasSucceeded && string.IsNullOrWhiteSpace(conversionResult.Data))
                 {
                     cancellationToken.ThrowIfCancellationRequested();
-                    return new(XsdGenerator.InvalidXsd, false);
+                    return new(Localization.XsdGenerator.InvalidXsd, false);
                 }
                 break;
             default:
