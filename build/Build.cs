@@ -26,6 +26,9 @@ class Build : NukeBuild
 
     [Parameter("ProjectUrl")] readonly string ProjectUrl;
 
+    [Parameter("Tags")] readonly string Tags;
+    [Parameter("Title")] readonly string Title;
+
     [Parameter][Secret] readonly string NuGetApiKey;
 
     [NerdbankGitVersioning]
@@ -51,7 +54,11 @@ class Build : NukeBuild
     Target Restore => _ => _
         .Executes(() =>
         {
-            DotNetTasks.DotNetRestore();
+            DotNetTasks.DotNetRestore(_ =>
+            {
+                _ = _.SetProjectFile(Solution);
+                return _;
+            });
         });
 
     Target Compile => _ => _
@@ -88,6 +95,7 @@ class Build : NukeBuild
         .Executes(() =>
         {
             DotNetTasks.DotNetPack(_ => _
+                .SetProject(Solution)
                 .SetOutputDirectory(OutputDirectory)
                 .SetConfiguration(Configuration)
                 .SetProperties(new Dictionary<string, object>
@@ -97,6 +105,8 @@ class Build : NukeBuild
                     {"Authors", Authors},
                     {"PackageProjectUrl", ProjectUrl}
                 })
+                .SetTitle(Title)
+                .SetPackageTags(Tags.Split(';'))
                 .EnableNoBuild());
         });
 

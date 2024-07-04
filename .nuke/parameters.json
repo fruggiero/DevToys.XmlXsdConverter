@@ -1,4 +1,9 @@
 {
   "$schema": "./build.schema.json",
-  "Solution": "src/DevToys.XmlXsd.sln"
+  "Solution": "src/DevToys.XmlXsd.sln",
+  "PackageDescription": "Extension for DevToys that convert from XML to XSD schema definition and vice versa.",
+  "Authors": "Federico Ruggiero",
+  "ProjectUrl": "https://github.com/fruggiero/DevToys.XmlXsdConverter",
+  "Tags": "devtoys-app",
+  "Title": "XML <> XSD converter"
 }
