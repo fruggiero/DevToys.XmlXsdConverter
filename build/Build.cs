@@ -14,7 +14,7 @@ using Nuke.Common.Utilities.Collections;
     "continuous",
     GitHubActionsImage.UbuntuLatest,
     On = new[] { GitHubActionsTrigger.Push },
-    InvokedTargets = new[] { nameof(Compile) },
+    InvokedTargets = new[] { nameof(Compile), nameof(Pack) },
     ImportSecrets = new[] {nameof(NuGetApiKey)}
     )]
 class Build : NukeBuild
