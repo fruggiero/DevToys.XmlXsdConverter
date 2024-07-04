@@ -37,6 +37,7 @@ jobs:
         run: ./build.cmd Compile Pack Publish
         env:
           NuGetApiKey: ${{ secrets.NUGET_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: 'Publish: output'
         uses: actions/upload-artifact@v3
         with:

@@ -16,6 +16,7 @@ using Nuke.Common.Utilities.Collections;
     GitHubActionsImage.UbuntuLatest,
     On = new[] { GitHubActionsTrigger.Push },
     FetchDepth = 0,
+    EnableGitHubToken = true,
     InvokedTargets = new[] { nameof(Compile), nameof(Pack), nameof(Publish) },
     ImportSecrets = new[] {nameof(NuGetApiKey)}
     )]
