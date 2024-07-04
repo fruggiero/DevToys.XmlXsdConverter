@@ -1,7 +1,5 @@
 ﻿using DevToys.Api;
 using System.ComponentModel.Composition;
-using System.Xml;
-using System.Xml.Schema;
 using DevToys.XmlXsd.Models;
 using Microsoft.Extensions.Logging;
 using static DevToys.Api.GUI;
@@ -35,7 +33,6 @@ internal sealed class XmlXsdConverterGuiTool : IGuiTool
     }
 
     private const string _xmlLanguage = "xml";
-    private const string _xsdLanguage = "xsd";
     private readonly ISettingsProvider _settingsProvider;
     private readonly ILogger _logger;
     private CancellationTokenSource? _cancellationTokenSource;
@@ -180,7 +177,7 @@ internal sealed class XmlXsdConverterGuiTool : IGuiTool
             parsedData is string xmlStrongTypedParsedData)
         {
             _inputTextArea.Language(_xmlLanguage);
-            _outputTextArea.Language(_xsdLanguage);
+            _outputTextArea.Language(_xmlLanguage);
             _settingsProvider.SetSetting(_conversionMode, XmlToXsdConversion.XmlToXsd);
             _inputTextArea.Text(xmlStrongTypedParsedData);
         }
@@ -188,7 +185,7 @@ internal sealed class XmlXsdConverterGuiTool : IGuiTool
         if (dataTypeName == PredefinedCommonDataTypeNames.Xsd &&
             parsedData is string xsdStrongTypedParsedData)
         {
-            _inputTextArea.Language(_xsdLanguage);
+            _inputTextArea.Language(_xmlLanguage);
             _outputTextArea.Language(_xmlLanguage);
             _settingsProvider.SetSetting(_conversionMode, XmlToXsdConversion.XsdToXml);
             _inputTextArea.Text(xsdStrongTypedParsedData);
@@ -210,7 +207,7 @@ internal sealed class XmlXsdConverterGuiTool : IGuiTool
         {
             await TaskSchedulerAwaiter.SwitchOffMainThreadAsync(cancellationToken);
 
-            ResultInfo<string> conversionResult = await XmlXsdHelper.ConvertAsync(
+            ResultInfo<string> conversionResult = await Conversion.ConvertAsync(
                 input,
                 conversionModeSetting,
                 indentationModeSetting,

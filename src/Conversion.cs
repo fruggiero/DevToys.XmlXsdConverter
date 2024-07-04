@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DevToys.XmlXsd;
 
-internal static class XmlXsdHelper
+internal static class Conversion
 {
     public static async ValueTask<ResultInfo<string>> ConvertAsync(
         string input,

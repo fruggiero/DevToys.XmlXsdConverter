@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Localization\" />
     <Folder Include="Models\" />
     <Folder Include="Extensions\" />
   </ItemGroup>
