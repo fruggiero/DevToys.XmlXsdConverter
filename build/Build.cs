@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Nuke.Common;
+using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.IO;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.NerdbankGitVersioning;
@@ -9,6 +10,13 @@ using Nuke.Common.Utilities.Collections;
 [SuppressMessage("ReSharper", "AssignmentInsteadOfDiscard")]
 [SuppressMessage("ReSharper", "AllUnderscoreLocalParameterName")]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
+[GitHubActions(
+    "continuous",
+    GitHubActionsImage.UbuntuLatest,
+    On = new[] { GitHubActionsTrigger.Push },
+    InvokedTargets = new[] { nameof(Compile) },
+    ImportSecrets = new[] {nameof(NuGetApiKey)}
+    )]
 class Build : NukeBuild
 {
     static AbsolutePath SourceDirectory => RootDirectory / "src";
