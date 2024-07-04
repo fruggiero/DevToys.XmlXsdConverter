@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Nuke.Common;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.IO;
@@ -128,14 +129,18 @@ class Build : NukeBuild
         .After(Pack)
         .Executes(() =>
         {
-            // gh release create
-
-            Gh($"release create v{NerdbankVersioning.NuGetPackageVersion} --title \"v{NerdbankVersioning.NuGetPackageVersion}\"");
-            // var path = OutputDirectory / $"{System.IO.Path.GetFileNameWithoutExtension(Solution)}.{NerdbankVersioning.NuGetPackageVersion}.nupkg";
-            // DotNetTasks.DotNetNuGetPush(_ => _
-            //     .SetApiKey(NuGetApiKey)
-            //     .SetTargetPath(path)
-            //     .SetSource("https://api.nuget.org/v3/index.json")
-            // );
+            // Collect all package files from the output directory
+            var packageFiles = OutputDirectory.GlobFiles("*.nupkg");
+            var filePath = packageFiles.First();
+            
+            // Release to GitHub
+            Gh($"release create v{NerdbankVersioning.NuGetPackageVersion} {filePath} --title \"v{NerdbankVersioning.NuGetPackageVersion}\"");
+            
+            // Release to nuget.org
+            DotNetTasks.DotNetNuGetPush(_ => _
+                .SetApiKey(NuGetApiKey)
+                .SetTargetPath(filePath)
+                .SetSource("https://api.nuget.org/v3/index.json")
+            );
         });
 }
