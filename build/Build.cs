@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Nuke.Common;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.IO;
+using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.NerdbankGitVersioning;
 using Nuke.Common.Utilities.Collections;
@@ -15,7 +16,7 @@ using Nuke.Common.Utilities.Collections;
     GitHubActionsImage.UbuntuLatest,
     On = new[] { GitHubActionsTrigger.Push },
     FetchDepth = 0,
-    InvokedTargets = new[] { nameof(Compile), nameof(Pack) },
+    InvokedTargets = new[] { nameof(Compile), nameof(Pack), nameof(Publish) },
     ImportSecrets = new[] {nameof(NuGetApiKey)}
     )]
 class Build : NukeBuild
@@ -42,6 +43,9 @@ class Build : NukeBuild
 
     [NerdbankGitVersioning]
     readonly NerdbankGitVersioning NerdbankVersioning;
+
+    [PathVariable]
+    readonly Tool Gh;
     
     public static int Main () => Execute<Build>(x => x.Compile);
 
@@ -123,11 +127,14 @@ class Build : NukeBuild
         .After(Pack)
         .Executes(() =>
         {
-            var path = OutputDirectory / $"{System.IO.Path.GetFileNameWithoutExtension(Solution)}.{NerdbankVersioning.NuGetPackageVersion}.nupkg";
-            DotNetTasks.DotNetNuGetPush(_ => _
-                .SetApiKey(NuGetApiKey)
-                .SetTargetPath(path)
-                .SetSource("https://api.nuget.org/v3/index.json")
-            );
+            // gh release create
+
+            Gh($"release create v{NerdbankVersioning.NuGetPackageVersion} --title \"v{NerdbankVersioning.NuGetPackageVersion}\"");
+            // var path = OutputDirectory / $"{System.IO.Path.GetFileNameWithoutExtension(Solution)}.{NerdbankVersioning.NuGetPackageVersion}.nupkg";
+            // DotNetTasks.DotNetNuGetPush(_ => _
+            //     .SetApiKey(NuGetApiKey)
+            //     .SetTargetPath(path)
+            //     .SetSource("https://api.nuget.org/v3/index.json")
+            // );
         });
 }
